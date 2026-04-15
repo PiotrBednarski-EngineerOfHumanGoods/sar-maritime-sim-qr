@@ -1,0 +1,41 @@
+/* ============================================================
+   EnvironmentControls — compact icon-only toggle pill
+   ============================================================ */
+
+.env-toggles {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px;
+  background: rgba(255, 255, 255, 0.90);
+  backdrop-filter: blur(18px) saturate(1.2);
+  -webkit-backdrop-filter: blur(18px) saturate(1.2);
+  border: 1px solid rgba(226, 232, 240, 0.85);
+  border-radius: 10px;
+  box-shadow: 0 4px 18px rgba(15, 23, 42, 0.10);
+}
+
+.env-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 7px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.env-toggle-btn:hover {
+  background: var(--surface-2);
+  color: var(--text-secondary);
+}
+
+.env-toggle-btn--active {
+  background: var(--accent-light);
+  border-color: var(--accent-border);
+  /* colour comes from inline style to use the layer's accent */
+}

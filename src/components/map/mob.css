@@ -1,0 +1,189 @@
+/* ============================================================
+   MOB Alert marker — CSS animations
+   Injected globally by Vite when MobAlertMarker is imported.
+   All class names are prefixed with "mob-" to avoid conflicts.
+   ============================================================ */
+
+/* ---- Wrapper ---- */
+.mob-marker {
+  position: relative;
+  /* zero-size container; all children use absolute positioning
+     centered with translate(-50%, -50%). */
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+/* ---- Expanding pulse rings ---- */
+.mob-ring {
+  position: absolute;
+  top: 0;
+  left: 0;
+  /* Start small; scale animation expands outward */
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 2px solid #ef4444;
+  transform: translate(-50%, -50%) scale(0.35);
+  opacity: 0;
+  animation: mob-ring-expand 1.8s ease-out infinite;
+  pointer-events: none;
+}
+
+/* Stagger each ring so they form a continuous outward wave.
+   Tighter cycle (1.8 s) and stagger (0.45 s) so multiple rings are
+   already expanding when the marker first appears. */
+.mob-ring:nth-child(1) { animation-delay: 0s;     border-color: rgba(239, 68, 68, 0.90); }
+.mob-ring:nth-child(2) { animation-delay: 0.45s;  border-color: rgba(239, 68, 68, 0.75); }
+.mob-ring:nth-child(3) { animation-delay: 0.9s;   border-color: rgba(239, 68, 68, 0.55); }
+.mob-ring:nth-child(4) { animation-delay: 1.35s;  border-color: rgba(239, 68, 68, 0.35); }
+
+@keyframes mob-ring-expand {
+  0%   { transform: translate(-50%, -50%) scale(0.3);  opacity: 1;  }
+  55%  { opacity: 0.45; }
+  100% { transform: translate(-50%, -50%) scale(4.8);  opacity: 0;  }
+}
+
+/* ---- Core dot ---- */
+.mob-core {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 32px;
+  height: 32px;
+  transform: translate(-50%, -50%);
+  background: #ef4444;
+  border-radius: 50%;
+  border: 3px solid #ffffff;
+  /* Layered shadow: tight crisp ring + diffuse glow */
+  box-shadow:
+    0 0 0 2px rgba(239, 68, 68, 0.5),
+    0 0 20px 6px rgba(239, 68, 68, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: system-ui, -apple-system, sans-serif;
+  font-weight: 900;
+  font-size: 16px;
+  color: #ffffff;
+  z-index: 10;
+  animation: mob-core-breathe 1.5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes mob-core-breathe {
+  0%, 100% {
+    box-shadow:
+      0 0 0 2px rgba(239, 68, 68, 0.5),
+      0 0 20px 6px rgba(239, 68, 68, 0.45);
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    box-shadow:
+      0 0 0 5px rgba(239, 68, 68, 0.25),
+      0 0 32px 12px rgba(239, 68, 68, 0.65);
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+}
+
+/* ---- MOB ALERT text label ---- */
+.mob-label {
+  position: absolute;
+  /* Sits ABOVE the core so it does not cover the SE drift/vector line.
+     bottom: 22px means the label's bottom edge is 22 px above the
+     zero-size marker centre, clearing the 16 px core radius. */
+  top: auto;
+  bottom: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #ef4444;
+  color: #ffffff;
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  padding: 3px 10px 3px 10px;
+  border-radius: 4px;
+  box-shadow: 0 2px 12px rgba(239, 68, 68, 0.55);
+  animation: mob-label-pulse 1.5s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 10;
+}
+
+@keyframes mob-label-pulse {
+  0%, 100% { opacity: 1;    box-shadow: 0 2px 12px rgba(239, 68, 68, 0.55); }
+  50%       { opacity: 0.85; box-shadow: 0 2px 20px rgba(239, 68, 68, 0.80); }
+}
+
+/* ============================================================
+   MOB Recovered marker — green resolution indicator
+   ============================================================ */
+
+.mob-found-ring {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 2px solid rgba(34, 197, 94, 0.55);
+  transform: translate(-50%, -50%) scale(0.3);
+  opacity: 0;
+  animation: mob-found-expand 2.2s ease-out infinite;
+  pointer-events: none;
+}
+
+.mob-found-ring:nth-child(1) { animation-delay: 0s;    border-color: rgba(34, 197, 94, 0.70); }
+.mob-found-ring:nth-child(2) { animation-delay: 0.7s;  border-color: rgba(34, 197, 94, 0.45); }
+.mob-found-ring:nth-child(3) { animation-delay: 1.4s;  border-color: rgba(34, 197, 94, 0.25); }
+
+@keyframes mob-found-expand {
+  0%   { transform: translate(-50%, -50%) scale(0.3); opacity: 1; }
+  60%  { opacity: 0.4; }
+  100% { transform: translate(-50%, -50%) scale(4.2); opacity: 0; }
+}
+
+.mob-found-core {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 28px;
+  height: 28px;
+  transform: translate(-50%, -50%);
+  background: #22c55e;
+  border-radius: 50%;
+  border: 3px solid #ffffff;
+  box-shadow:
+    0 0 0 2px rgba(34, 197, 94, 0.4),
+    0 0 18px 6px rgba(34, 197, 94, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 14px;
+  color: #ffffff;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.mob-found-label {
+  position: absolute;
+  bottom: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #16a34a;
+  color: #ffffff;
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  padding: 3px 10px;
+  border-radius: 4px;
+  box-shadow: 0 2px 10px rgba(34, 197, 94, 0.50);
+  pointer-events: none;
+  z-index: 10;
+}

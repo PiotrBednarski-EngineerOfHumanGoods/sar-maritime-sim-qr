@@ -1,0 +1,3 @@
+/* index.css — intentionally minimal.
+   All design tokens and resets live in src/styles/theme.css,
+   which is imported before this file in main.tsx. */

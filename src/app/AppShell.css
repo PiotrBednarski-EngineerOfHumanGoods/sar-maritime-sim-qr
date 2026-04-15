@@ -1,0 +1,231 @@
+/* ============================================================
+   AppShell — map-first layout
+   Map fills the full viewport. UI floats as minimal overlays.
+   ============================================================ */
+
+.app-shell {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  padding: env(safe-area-inset-top, 0) env(safe-area-inset-right, 0) env(safe-area-inset-bottom, 0)
+    env(safe-area-inset-left, 0);
+  box-sizing: border-box;
+}
+
+/* ---- Map base layer ---- */
+.map-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+/* ---- UI overlay — transparent pass-through ---- */
+.ui-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* ---- MOB alert vignette flash ---- */
+.alert-vignette {
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.alert-vignette--active {
+  animation: vignette-flash 3s ease-out forwards;
+}
+
+@keyframes vignette-flash {
+  0%   { opacity: 0; box-shadow: inset 0 0 0 0 transparent; }
+  8%   { opacity: 1; box-shadow: inset 0 0 80px 30px rgba(239, 68, 68, 0.38); }
+  35%  { opacity: 1; box-shadow: inset 0 0 60px 20px rgba(239, 68, 68, 0.22); }
+  100% { opacity: 0; box-shadow: inset 0 0 0 0 transparent; }
+}
+
+/* ============================================================
+   Story chips  (top-right corner, stacked)
+   Pill-shaped, single-line, minimal — read like map captions.
+   ============================================================ */
+
+.overlay-chips {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: flex-end;
+  pointer-events: none;
+}
+
+/* Base chip — single-line pill */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 11px 5px 8px;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(20px) saturate(1.15);
+  -webkit-backdrop-filter: blur(20px) saturate(1.15);
+  border: 1px solid rgba(226, 232, 240, 0.80);
+  border-radius: 999px;
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  box-shadow: 0 2px 12px rgba(15, 23, 42, 0.08);
+  animation: chip-appear 0.20s ease-out;
+}
+
+@keyframes chip-appear {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+/* Danger variant — MOB / EPIRB */
+.chip--danger {
+  border-color: rgba(239, 68, 68, 0.20);
+  color: #7f1d1d;
+}
+
+/* Accent variant — primary responder */
+.chip--accent {
+  border-color: rgba(14, 165, 233, 0.18);
+  color: #0c4a6e;
+}
+
+/* Muted variant — intercept */
+.chip--muted {
+  color: var(--text-secondary);
+}
+
+/* Cyan variant — search pattern */
+.chip--cyan {
+  border-color: rgba(6, 182, 212, 0.20);
+  color: #164e63;
+}
+
+/* Success variant — MOB resolved */
+.chip--success {
+  border-color: rgba(34, 197, 94, 0.28);
+  color: #14532d;
+  background: rgba(240, 253, 244, 0.92);
+}
+
+/* Dot indicator */
+.chip-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  flex-shrink: 0;
+}
+
+.chip-dot--danger {
+  background: var(--danger);
+  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.18);
+  animation: dot-pulse 1.6s ease-in-out infinite;
+}
+
+.chip-dot--accent {
+  background: var(--accent);
+}
+
+.chip-dot--muted {
+  background: var(--text-muted);
+}
+
+.chip-dot--cyan {
+  background: #06b6d4;
+}
+
+.chip-dot--success {
+  background: #22c55e;
+  box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.22);
+}
+
+@keyframes dot-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.35; }
+}
+
+/* ============================================================
+   Bottom row  (env toggles + playback)
+   ============================================================ */
+
+.overlay-bottom-row {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  right: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  pointer-events: none;
+}
+
+.overlay-env {
+  pointer-events: auto;
+  flex-shrink: 0;
+}
+
+.overlay-playback {
+  pointer-events: auto;
+  flex: 1;
+  min-width: 0;
+}
+
+@media (max-width: 640px) {
+  .overlay-chips {
+    top: max(8px, env(safe-area-inset-top, 0px));
+    right: 8px;
+    left: 8px;
+    align-items: stretch;
+    max-width: calc(100vw - 16px);
+  }
+
+  .chip {
+    font-size: 10px;
+    padding: 6px 10px 6px 8px;
+    white-space: normal;
+    line-height: 1.25;
+    max-width: 100%;
+    border-radius: 10px;
+  }
+
+  .overlay-bottom-row {
+    bottom: max(8px, env(safe-area-inset-bottom, 0px));
+    left: 8px;
+    right: 8px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+  }
+
+  .overlay-env {
+    align-self: center;
+  }
+
+  .overlay-playback {
+    width: 100%;
+  }
+
+  .scenario-icon-btn {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  .env-toggle-btn {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    min-height: 36px;
+  }
+}

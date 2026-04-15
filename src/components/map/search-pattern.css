@@ -1,0 +1,26 @@
+/* ============================================================
+   Search Pattern Layer — CSS animations
+   Injected globally by Vite when SearchPatternLayer is imported.
+   All class names are prefixed with "sp-" to avoid conflicts.
+   ============================================================ */
+
+/* Datum ring: pulse-in when the search pattern activates */
+@keyframes sp-datum-appear {
+  0%   { opacity: 0; transform: scale(0.4); }
+  60%  { opacity: 1; transform: scale(1.18); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.sp-datum-ring {
+  animation: sp-datum-appear 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Path lines: fade in so the draw feels deliberate, not jarring */
+@keyframes sp-path-appear {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.sp-path {
+  animation: sp-path-appear 0.5s ease-out forwards;
+}

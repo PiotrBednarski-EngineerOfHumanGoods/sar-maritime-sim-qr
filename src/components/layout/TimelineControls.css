@@ -1,0 +1,132 @@
+.timeline {
+  display: flex;
+  align-items: center;
+  height: var(--timeline-height);
+  padding: 0 16px;
+  gap: 14px;
+  border-radius: var(--radius-lg);
+}
+
+/* ---- Controls cluster ---- */
+.timeline-controls {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+/* ---- Track area ---- */
+.timeline-track-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.timeline-labels {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 0;
+}
+
+.timeline-label {
+  font-size: 10px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  letter-spacing: 0.03em;
+}
+
+/* ---- Track ---- */
+.timeline-track {
+  position: relative;
+  height: 6px;
+  background: var(--surface-2);
+  border-radius: var(--radius-full);
+  overflow: visible;
+}
+
+.timeline-fill {
+  position: absolute;
+  inset: 0;
+  right: auto;
+  background: var(--accent);
+  border-radius: var(--radius-full);
+  transition: width 0.1s linear;
+}
+
+/* ---- MOB event marker ---- */
+.timeline-event {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  pointer-events: none;
+}
+
+.timeline-event-line {
+  width: 2px;
+  height: 14px;
+  background: var(--danger);
+  border-radius: 1px;
+  margin-top: -4px;
+}
+
+.timeline-event-label {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--danger);
+  margin-top: 2px;
+  background: var(--surface-0);
+  padding: 1px 4px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--danger-light);
+  white-space: nowrap;
+  position: absolute;
+  top: 12px;
+}
+
+/* ---- Playhead ---- */
+.timeline-playhead {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 14px;
+  height: 14px;
+  background: var(--surface-0);
+  border: 2.5px solid var(--accent);
+  border-radius: var(--radius-full);
+  box-shadow: 0 1px 4px rgba(14, 165, 233, 0.35);
+  transition: left 0.1s linear;
+  cursor: grab;
+  z-index: 2;
+}
+
+/* ---- Time readout ---- */
+.timeline-time {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  flex-shrink: 0;
+  gap: 0;
+}
+
+.timeline-time-value {
+  font-family: var(--font-mono);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+}
+
+.timeline-time-unit {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
